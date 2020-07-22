@@ -97,9 +97,12 @@ class Expo
         // Gets the expo tokens for the interests
         $recipients = $this->registrar->getInterests($interests);
 
+        // Setting an array of recipients instead of multiple messages is better since expo limits messages to 100.
+        $to = [];
         foreach ($recipients as $token) {
-            $postData[] = $data + ['to' => $token];
+            $to[] = $token;
         }
+        $postData[] = $data + ['to' => $to];
 
         $ch = $this->prepareCurl();
 
